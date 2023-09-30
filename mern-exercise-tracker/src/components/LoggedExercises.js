@@ -16,126 +16,35 @@ const data = [
       date: '2023-09-30',
     },
     {
-      key: '1',
+      key: '3',
       description: 'Task 1',
       duration: '2 hours',
       date: '2023-09-29',
     },
     {
-      key: '2',
+      key: '4',
       description: 'Task 2',
       duration: '1.5 hours',
       date: '2023-09-30',
     },
     {
-      key: '1',
+      key: '5',
       description: 'Task 1',
       duration: '2 hours',
       date: '2023-09-29',
     },
     {
-      key: '2',
+      key: '6',
       description: 'Task 2',
       duration: '1.5 hours',
       date: '2023-09-30',
     },
     {
-      key: '1',
+      key: '7',
       description: 'Task 1',
       duration: '2 hours',
       date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '1',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '1',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '1',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '1',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '1',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '1',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '1',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    // Add more data as needed
+    }
   ];
   
   const columns = [

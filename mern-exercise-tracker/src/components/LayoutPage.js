@@ -1,16 +1,16 @@
 
 import React, {useState} from 'react';
 import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import NavBar from './NavBar';
 import LoggedExercises from './LoggedExercises';
-import Button from "antd-button-color";
-const { Content, Footer, Sider } = Layout;
+import CreateExercise from './CreateExercise';
+const { Content, Sider } = Layout;
 
 
 const items2 = [DashboardOutlined, CalculatorOutlined, AreaChartOutlined, UserOutlined].map((icon, index) => {
   const key = String(index + 1);
-  let itemLabel = ""
+  let itemLabel;
   if(index === 0){
     itemLabel = "Dashboard"
   }
@@ -31,6 +31,7 @@ const items2 = [DashboardOutlined, CalculatorOutlined, AreaChartOutlined, UserOu
 });
 const LayoutPage = () => {
   const [collapsed, setCollapsed] = useState(false);
+ 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -39,21 +40,12 @@ const LayoutPage = () => {
       <NavBar/>
       <Content
         style={{
-          padding: '0 50px',
+          padding: '0 0px',
         }}
       >
-        <Breadcrumb
-          style={{
-            margin: '16px 0',
-          }}
-        >
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
         <Layout
           style={{
-            padding: '24px 0',
+            padding: '0px 0',
             background: colorBgContainer,
           }}
         >
@@ -63,15 +55,17 @@ const LayoutPage = () => {
             }}
             width={200}
           >
-            <Menu 
-              mode="inline"
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
-              style={{
-                height: '100%',
-              }}
-              items={items2}
-            />
+          <Menu 
+            mode="inline"
+            defaultSelectedKeys={['sub1']}
+            defaultOpenKeys={['sub1']}
+            style={{
+              height: '300%',
+            }}
+            theme="dark"
+            inlineCollapsed={collapsed}
+            items={items2}
+          />
           </Sider>
           <Content
             style={{
@@ -79,18 +73,11 @@ const LayoutPage = () => {
               minHeight: 280,
             }}
           >
-            <Button type="dark" style={{float: "right"}} >Log Exercise</Button>
+            <CreateExercise/>
             <LoggedExercises/>
           </Content>
         </Layout>
       </Content>
-      {/* <Footer
-        style={{
-          textAlign: 'center',
-        }}
-      >
-        Ant Design ©2023 Created by Ant UED
-      </Footer> */}
     </Layout>
   );
 };
