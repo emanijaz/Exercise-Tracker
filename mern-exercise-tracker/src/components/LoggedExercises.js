@@ -15,6 +15,126 @@ const data = [
       duration: '1.5 hours',
       date: '2023-09-30',
     },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
+    {
+      key: '1',
+      description: 'Task 1',
+      duration: '2 hours',
+      date: '2023-09-29',
+    },
+    {
+      key: '2',
+      description: 'Task 2',
+      duration: '1.5 hours',
+      date: '2023-09-30',
+    },
     // Add more data as needed
   ];
   
@@ -93,6 +213,9 @@ const LoggedExercises = () => {
       dataSource={data}
       pagination={tableParams.pagination}
       loading={loading}
+      // scroll={{
+      //   y: 800,
+      // }}
     //   onChange={handleTableChange}
     />
   );

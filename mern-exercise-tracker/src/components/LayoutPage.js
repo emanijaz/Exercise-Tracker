@@ -4,6 +4,7 @@ import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined 
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import NavBar from './NavBar';
 import LoggedExercises from './LoggedExercises';
+import Button from "antd-button-color";
 const { Content, Footer, Sider } = Layout;
 
 
@@ -78,6 +79,7 @@ const LayoutPage = () => {
               minHeight: 280,
             }}
           >
+            <Button type="dark" style={{float: "right"}} >Log Exercise</Button>
             <LoggedExercises/>
           </Content>
         </Layout>
