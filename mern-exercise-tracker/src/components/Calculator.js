@@ -121,16 +121,16 @@ export default function Calculator() {
         else if(whr){
             type = "whr"
             params = {
-                weight: String(values.waist),
-                height: String(values.hip),
+                waist: String(values.waist),
+                hip: String(values.hip),
                 gender: values.gender
             }
         }
         else if(absi){
             type = "absi"
             params = {
-                weight: String(values.waist),
-                height: String(values.hip),
+                weight: String(values.weight),
+                height: String(values.height),
                 waist: String(values.waist),
                 age: String(values.age),
                 gender: values.gender
@@ -148,39 +148,42 @@ export default function Calculator() {
           };
           
           try {
-              const response = await axios.request(options);
-              console.log(response.data);
-              const resultInfo = response.data.info;
+            const response = await axios.request(options);
+            console.log(response.data);
+            const resultInfo = response.data.info;
             Modal.success({
                 title: 'Calculation Successful',
                 content: (
-                  <>
+                <>
                     <Alert
-                      message="Result:"
-                      description="Calculation successful!"
-                      type="success"
-                      showIcon
+                    message="Result:"
+                    description="Calculation successful!"
+                    type="success"
+                    showIcon
                     />
                     {resultInfo && (
-                      <div>
+                    <div>
                         <h3>Details:</h3>
                         <ul>
-                          {Object.entries(resultInfo).map(([key, value]) => (
+                        {Object.entries(resultInfo).map(([key, value]) => (
                             <li key={key}>
-                              <strong>{key}:</strong> {value}
+                            <strong>{key}:</strong> {value}
                             </li>
-                          ))}
+                        ))}
                         </ul>
-                      </div>
+                    </div>
                     )}
-                  </>
+                </>
                 ),
-              });
+            });
           } catch (error) {
               console.error(error);
+              Modal.error({
+                title: 'Calculation Failed',
+                content: 'An error occurred during calculation.',
+              });
           }
         console.log(values)
-        // setIsModalOpen(false);
         handleCancel();
     };
     
