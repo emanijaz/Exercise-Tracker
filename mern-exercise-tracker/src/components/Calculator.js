@@ -138,8 +138,8 @@ export default function Calculator() {
             const response = await axios.request(options);
             console.log(response.data);
             const resultInfo = response.data.info;
-            Modal.success({
-                title: 'Calculation Successful',
+            Modal.info({
+                // title: 'Calculation Successful',
                 content: (
                 <>
                     <Alert
