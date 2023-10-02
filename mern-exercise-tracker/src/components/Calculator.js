@@ -4,6 +4,7 @@ import { Layout, Menu ,theme} from 'antd';
 import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
 import { Card, Row, Col, Button,  Modal, Form, InputNumber, Select, Alert} from 'antd';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 const { Option } = Select;
 const { Content, Sider } = Layout;
 
@@ -14,27 +15,13 @@ const tailLayout = {
     },
 };
 
-const items2 = [DashboardOutlined, CalculatorOutlined, AreaChartOutlined, UserOutlined].map((icon, index) => {
-    const key = String(index + 1);
-    let itemLabel;
-    if(index === 0){
-      itemLabel = "Dashboard"
-    }
-    else if(index === 1){
-      itemLabel = "Fitness Calculator"
-    }
-    else if(index === 2){
-      itemLabel = "Charts"
-    }
-    else if(index === 3){
-      itemLabel = "Profile"
-    }
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: itemLabel,
-    };
-  });
+const items2 = [
+    { key: 'sub1', icon: <DashboardOutlined />, label: 'Dashboard', path: '/' },
+    { key: 'sub2', icon: <CalculatorOutlined />, label: 'Fitness Calculator', path: '/calculator' },
+    { key: 'sub3', icon: <AreaChartOutlined />, label: 'Charts', path: '/charts' },
+    { key: 'sub4', icon: <UserOutlined />, label: 'Profile', path: '/profile' },
+  ];
+  
 
 export default function Calculator() {
     const [collapsed, setCollapsed] = useState(false);
@@ -219,8 +206,14 @@ export default function Calculator() {
             }}
             theme="dark"
             inlineCollapsed={collapsed}
-            items={items2}
-          />
+            
+          >
+            {items2.map((item) => (
+              <Menu.Item key={item.key} icon={item.icon}>
+                <Link to={item.path}>{item.label}</Link>
+              </Menu.Item>
+            ))}
+          </Menu>
           </Sider>
           <Content
             style={{

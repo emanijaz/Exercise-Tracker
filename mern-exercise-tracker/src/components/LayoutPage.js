@@ -5,30 +5,16 @@ import { Layout, Menu, theme } from 'antd';
 import NavBar from './NavBar';
 import LoggedExercises from './LoggedExercises';
 import CreateExercise from './CreateExercise';
+import { Link } from 'react-router-dom';
 const { Content, Sider } = Layout;
 
+const items2 = [
+  { key: 'sub1', icon: <DashboardOutlined />, label: 'Dashboard', path: '/' },
+  { key: 'sub2', icon: <CalculatorOutlined />, label: 'Fitness Calculator', path: '/calculator' },
+  { key: 'sub3', icon: <AreaChartOutlined />, label: 'Charts', path: '/charts' },
+  { key: 'sub4', icon: <UserOutlined />, label: 'Profile', path: '/profile' },
+];
 
-const items2 = [DashboardOutlined, CalculatorOutlined, AreaChartOutlined, UserOutlined].map((icon, index) => {
-  const key = String(index + 1);
-  let itemLabel;
-  if(index === 0){
-    itemLabel = "Dashboard"
-  }
-  else if(index === 1){
-    itemLabel = "Fitness Calculator"
-  }
-  else if(index === 2){
-    itemLabel = "Charts"
-  }
-  else if(index === 3){
-    itemLabel = "Profile"
-  }
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: itemLabel,
-  };
-});
 const LayoutPage = () => {
   const [collapsed, setCollapsed] = useState(false);
  
@@ -64,8 +50,14 @@ const LayoutPage = () => {
             }}
             theme="dark"
             inlineCollapsed={collapsed}
-            items={items2}
-          />
+            
+          >
+            {items2.map((item) => (
+              <Menu.Item key={item.key} icon={item.icon}>
+                <Link to={item.path}>{item.label}</Link>
+              </Menu.Item>
+            ))}
+          </Menu>
           </Sider>
           <Content
             style={{
