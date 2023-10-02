@@ -60,7 +60,7 @@ const LayoutPage = () => {
             defaultSelectedKeys={['sub1']}
             defaultOpenKeys={['sub1']}
             style={{
-              height: '300%',
+              height: '180%',
             }}
             theme="dark"
             inlineCollapsed={collapsed}
