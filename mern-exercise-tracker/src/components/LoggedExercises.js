@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import qs from 'qs';
-import { Table } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Table, Button, Space, Popconfirm, message } from 'antd';
 const data = [
     {
       key: '1',
@@ -63,7 +63,45 @@ const data = [
       dataIndex: 'date',
       key: 'date',
     },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (text, record) => (
+      <Space size="middle">
+        <Button icon={<EditOutlined />} onClick={() => handleEdit(record.id)}>
+          Edit
+        </Button>
+        <Popconfirm
+          title="Delete the task"
+          description="Are you sure to delete this task?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button danger icon={<DeleteOutlined />} onClick={() => handleDelete(record.id)}>Delete</Button>
+        </Popconfirm>
+      </Space>
+      )
+    }
   ];
+  const confirmDelete = (e) => {
+    console.log(e);
+    message.success('Click on Yes');
+  };
+  const cancelDelete = (e) => {
+    console.log(e);
+    message.error('Click on No');
+  };
+  const handleEdit = (id) => {
+    // Implement edit logic here
+    console.log(`Edit record with ID ${id}`);
+  };
+  
+  const handleDelete = (id) => {
+    // Implement delete logic here
+    console.log(`Delete record with ID ${id}`);
+  };
   
 // const getRandomuserParams = (params) => ({
 //   results: params.pagination?.pageSize,
@@ -79,6 +117,7 @@ const LoggedExercises = () => {
       pageSize: 10,
     },
   });
+
 //   const fetchData = () => {
 //     setLoading(true);
 //     fetch(`https://randomuser.me/api?${qs.stringify(getRandomuserParams(tableParams))}`)
