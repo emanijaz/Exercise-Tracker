@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'antd';
+import axios from 'axios';
 import {
     DatePicker,
     Input,
@@ -23,8 +24,19 @@ export default function CreateExercise() {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    const onFinish = (values) => {
+    const onFinish = async(values) => {
+
+        axios.post("http://localhost:5000/exercises/create", {
+            username: "tester1",
+            description: values.description,
+            duration: Number(values.duration),
+            date: Date(values.date)
+        }).then((response)=>{
+            console.log("exercise created successfully")
+
+        })
         console.log(values)
+        setIsModalOpen(false);
     };
     const onReset = () => {
         form.resetFields();

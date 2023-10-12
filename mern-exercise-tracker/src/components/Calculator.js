@@ -199,8 +199,8 @@ export default function Calculator() {
           >
           <Menu 
             mode="inline"
-            defaultSelectedKeys={['sub1']}
-            defaultOpenKeys={['sub1']}
+            defaultSelectedKeys={['sub2']}
+            defaultOpenKeys={['sub2']}
             style={{
               height: '400%',
             }}
