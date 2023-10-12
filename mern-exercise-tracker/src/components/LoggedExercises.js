@@ -1,132 +1,58 @@
 
-import React, { useEffect, useState } from 'react';
-import qs from 'qs';
+import React, { useEffect, useState,forwardRef, useImperativeHandle } from 'react';
+import axios from 'axios';
 import { Table } from 'antd';
-const data = [
-    {
-      key: '1',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '2',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '3',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '4',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '5',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    },
-    {
-      key: '6',
-      description: 'Task 2',
-      duration: '1.5 hours',
-      date: '2023-09-30',
-    },
-    {
-      key: '7',
-      description: 'Task 1',
-      duration: '2 hours',
-      date: '2023-09-29',
-    }
-  ];
   
-  const columns = [
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-    },
-    {
-      title: 'Duration',
-      dataIndex: 'duration',
-      key: 'duration',
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-  ];
+const columns = [
+  {
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description',
+  },
+  {
+    title: 'Duration',
+    dataIndex: 'duration',
+    key: 'duration',
+  },
+  {
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+  },
+];
   
-// const getRandomuserParams = (params) => ({
-//   results: params.pagination?.pageSize,
-//   page: params.pagination?.current,
-//   ...params,
-// });
-const LoggedExercises = () => {
-//   const [data, setData] = useState();
+const LoggedExercises = forwardRef((props, ref) => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
-//   const fetchData = () => {
-//     setLoading(true);
-//     fetch(`https://randomuser.me/api?${qs.stringify(getRandomuserParams(tableParams))}`)
-//       .then((res) => res.json())
-//       .then(({ results }) => {
-//         setData(results);
-//         setLoading(false);
-//         setTableParams({
-//           ...tableParams,
-//           pagination: {
-//             ...tableParams.pagination,
-//             total: 200,
-//             // 200 is mock data, you should read it from server
-//             // total: data.totalCount,
-//           },
-//         });
-//       });
-//   };
 
-//   useEffect(() => {
-//     fetchData();
-//   }, [JSON.stringify(tableParams)]);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:5000/exercises/');
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, []); 
 
-//   const handleTableChange = (pagination, filters, sorter) => {
-//     setTableParams({
-//       pagination,
-//       filters,
-//       ...sorter,
-//     });
+  // Expose the fetchData function through the ref
+  useImperativeHandle(ref, () => ({
+    fetchData,
+  }));
 
-//     // `dataSource` is useless since `pageSize` changed
-//     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-//       setData([]);
-//     }
-//   };
   return (
     <Table
       columns={columns}
-    //   rowKey={(record) => record.login.uuid}
       dataSource={data}
-      pagination={tableParams.pagination}
       loading={loading}
-      // scroll={{
-      //   y: 800,
-      // }}
-    //   onChange={handleTableChange}
+      pagination={{ pageSize: 10 }}
     />
   );
-};
+});
 export default LoggedExercises;

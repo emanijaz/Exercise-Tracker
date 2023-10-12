@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form } from 'antd';
+import { Button, Modal, Form, Alert } from 'antd';
 import axios from 'axios';
 import {
     DatePicker,
@@ -14,7 +14,7 @@ const tailLayout = {
     },
 };
 
-export default function CreateExercise() {
+export default function CreateExercise({ onExerciseAdded }) {
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -25,18 +25,27 @@ export default function CreateExercise() {
         setIsModalOpen(false);
     };
     const onFinish = async(values) => {
+        try {
+            axios.post("http://localhost:5000/exercises/create", {
+                username: "tester1",
+                description: values.description,
+                duration: Number(values.duration),
+                date: Date(values.date)
+            }).then((response)=>{
+                console.log("exercise created successfully")
 
-        axios.post("http://localhost:5000/exercises/create", {
-            username: "tester1",
-            description: values.description,
-            duration: Number(values.duration),
-            date: Date(values.date)
-        }).then((response)=>{
-            console.log("exercise created successfully")
-
-        })
-        console.log(values)
-        setIsModalOpen(false);
+            })
+            console.log(values)
+            setIsModalOpen(false);
+            <Alert message="Exercise Logged Successfully" type="success" />
+            if (onExerciseAdded) {
+                onExerciseAdded();
+            }
+        }
+        catch{
+            console.log("Error creating exercise");
+            <Alert message="Error Creating Exercise" type="danger" />
+        }
     };
     const onReset = () => {
         form.resetFields();
