@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react';
+import React, {useState,useRef} from 'react';
 import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import NavBar from './NavBar';
@@ -17,6 +17,13 @@ const items2 = [
 
 const LayoutPage = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const loggedExercisesRef = useRef();
+  // Function to be called when a new exercise is added
+  const handleExerciseAdded = () => {
+    // Call the fetchData function of the LoggedExercises component through the ref
+    loggedExercisesRef.current.fetchData();
+  };
  
   const {
     token: { colorBgContainer },
@@ -65,8 +72,8 @@ const LayoutPage = () => {
               minHeight: 280,
             }}
           >
-            <CreateExercise/>
-            <LoggedExercises/>
+            <CreateExercise onExerciseAdded={handleExerciseAdded}/>
+            <LoggedExercises ref={loggedExercisesRef}/>
           </Content>
         </Layout>
       </Content>

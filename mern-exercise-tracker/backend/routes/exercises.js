@@ -22,6 +22,12 @@ router.route('/:id').get((req,res)=>{
     Exercise.findById(req.params.id).then(exercise=> res.json(exercise)).catch(err=>res.status(400).json("Error: "+err));
 })
 
+// get specific exercise
+// router.route('/:username').get((req,res)=>{
+//     Exercise.find({username: req.params.username}).then(exercise=> res.json(exercise)).catch(err=> res.status(400).json("Error: "+err))
+//     // Exercise.findById(req.params.id).then(exercise=> res.json(exercise)).catch(err=>res.status(400).json("Error: "+err));
+// })
+
 //delete specific exercise
 router.route('/:id').delete((req,res)=>{
     Exercise.findByIdAndDelete(req.params.id).then(()=> res.json("Exercise deleted successfully!")).catch(err=>res.status(400).json("Error: "+err));
