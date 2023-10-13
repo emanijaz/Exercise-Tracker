@@ -11,7 +11,7 @@ const { Content, Sider } = Layout;
 const items2 = [
   { key: 'sub1', icon: <DashboardOutlined />, label: 'Dashboard', path: '/' },
   { key: 'sub2', icon: <CalculatorOutlined />, label: 'Fitness Calculator', path: '/calculator' },
-  { key: 'sub3', icon: <AreaChartOutlined />, label: 'Charts', path: '/charts' },
+  { key: 'sub3', icon: <AreaChartOutlined />, label: 'Charts', path: '/chart' },
   { key: 'sub4', icon: <UserOutlined />, label: 'Profile', path: '/profile' },
 ];
 

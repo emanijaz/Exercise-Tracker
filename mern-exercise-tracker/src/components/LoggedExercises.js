@@ -29,7 +29,13 @@ const LoggedExercises = forwardRef((props, ref) => {
     setLoading(true);
     try {
       const response = await axios.get('http://localhost:5000/exercises/');
-      setData(response.data);
+      const d = response.data.map((exercise, index)=> ({
+        key: index,
+        description: exercise.description,
+        duration: exercise.duration,
+        date: String(new Date(exercise.date))
+      }))
+      setData(d);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
