@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { Alert, Calendar } from 'antd';
 import NavBar from './NavBar'
 import { Link } from 'react-router-dom';
-import ExerciseBarChart from './ExerciseBarChart';
+import ExercisePieChart from './ExercisePieChart';
 import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
 import { Layout, Menu ,theme} from 'antd';
 const { Content, Sider } = Layout;
@@ -41,14 +41,18 @@ const Chart = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:5000/exercises/');
-        setExerciseData(response.data);
+        const filteredExercises = response.data.filter((exercise)=> {
+            console.log(dayjs(exercise.date).format('YYYY-MM-DD'))
+            return dayjs(exercise.date).format('YYYY-MM-DD') === selectedValue.format('YYYY-MM-DD');
+        })
+        setExerciseData(filteredExercises);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [selectedValue]);
   return (
     
     <Layout>
@@ -96,8 +100,8 @@ const Chart = () => {
         >
             <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
             <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
-            <ExerciseBarChart exerciseData={exerciseData} />
-            </Content>
+            <ExercisePieChart exerciseData={exerciseData} />
+        </Content>
         </Layout>
       </Content>
     </Layout>

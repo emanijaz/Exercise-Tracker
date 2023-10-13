@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState,forwardRef, useImperativeHandle } from 'react';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { Table } from 'antd';
   
 const columns = [
@@ -33,7 +34,7 @@ const LoggedExercises = forwardRef((props, ref) => {
         key: index,
         description: exercise.description,
         duration: exercise.duration,
-        date: String(new Date(exercise.date))
+        date: dayjs(exercise.date).format('YYYY-MM-DD')
       }))
       setData(d);
     } catch (error) {
