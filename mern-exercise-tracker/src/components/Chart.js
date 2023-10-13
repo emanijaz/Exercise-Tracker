@@ -19,16 +19,14 @@ const items2 = [
 
 const Chart = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [value, setValue] = useState(() => dayjs('2017-01-25'));
-  const [selectedValue, setSelectedValue] = useState(() => dayjs('2017-01-25'));
+  const [value, setValue] = useState(() => dayjs('2023-10-09'));
+  const [selectedValue, setSelectedValue] = useState(() => dayjs('2023-10-09'));
   const onSelect = (newValue) => {
     setValue(newValue);
     setSelectedValue(newValue);
-    console.log("new value on select : ", newValue)
   };
   const onPanelChange = (newValue) => {
     setValue(newValue);
-    console.log("panel value : ", newValue)
   };
   const {
     token: { colorBgContainer },
@@ -42,7 +40,6 @@ const Chart = () => {
       try {
         const response = await axios.get('http://localhost:5000/exercises/');
         const filteredExercises = response.data.filter((exercise)=> {
-            console.log(dayjs(exercise.date).format('YYYY-MM-DD'))
             return dayjs(exercise.date).format('YYYY-MM-DD') === selectedValue.format('YYYY-MM-DD');
         })
         setExerciseData(filteredExercises);
@@ -72,7 +69,7 @@ const Chart = () => {
           style={{
             background: colorBgContainer,
           }}
-          width={200}
+          width={180}
         >
         <Menu 
           mode="inline"
@@ -100,7 +97,10 @@ const Chart = () => {
         >
             <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
             <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
-            <ExercisePieChart exerciseData={exerciseData} />
+            { exerciseData.length > 0 ? 
+            <ExercisePieChart exerciseData={exerciseData} /> : 
+            <Alert message="No Data To Show" />
+            }
         </Content>
         </Layout>
       </Content>
