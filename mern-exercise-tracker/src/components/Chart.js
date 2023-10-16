@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import dayjs from 'dayjs';
-import { Alert, Calendar } from 'antd';
+import { Alert, Calendar, Row, Col } from 'antd';
 import NavBar from './NavBar'
 import { Link } from 'react-router-dom';
 import ExercisePieChart from './ExercisePieChart';
@@ -19,8 +19,10 @@ const items2 = [
 
 const Chart = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [value, setValue] = useState(() => dayjs('2023-10-09'));
-  const [selectedValue, setSelectedValue] = useState(() => dayjs('2023-10-09'));
+  const [exerciseData, setExerciseData] = useState([]);
+  const [exerciseDescriptions, setExerciseDescriptions] = useState({});
+  const [value, setValue] = useState(() => dayjs());
+  const [selectedValue, setSelectedValue] = useState(() => dayjs());
   const onSelect = (newValue) => {
     setValue(newValue);
     setSelectedValue(newValue);
@@ -32,7 +34,23 @@ const Chart = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const [exerciseData, setExerciseData] = useState([]);
+
+  const dateCellRender = (value) => {
+    const formattedDate = value.format('YYYY-MM-DD');
+    const descriptions = exerciseDescriptions[formattedDate];
+
+    return (
+      <div>
+        {descriptions && descriptions.length > 0 && (
+          <ul>
+            {descriptions.map((description, index) => (
+              <li key={index}>{description}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  };
 
   useEffect(() => {
     // Fetch your exercise data from the server
@@ -43,6 +61,16 @@ const Chart = () => {
             return dayjs(exercise.date).format('YYYY-MM-DD') === selectedValue.format('YYYY-MM-DD');
         })
         setExerciseData(filteredExercises);
+
+        const descriptions = {};
+        response.data.forEach((exercise) => {
+          const formattedDate = dayjs(exercise.date).format('YYYY-MM-DD');
+          if (!descriptions[formattedDate]) {
+            descriptions[formattedDate] = [];
+          }
+          descriptions[formattedDate].push(exercise.description);
+        });
+        setExerciseDescriptions(descriptions);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -95,12 +123,19 @@ const Chart = () => {
             minHeight: 280,
           }}
         >
-            <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
-            <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
-            { exerciseData.length > 0 ? 
-            <ExercisePieChart exerciseData={exerciseData} /> : 
-            <Alert message="No Data To Show" />
-            }
+            <Row gutter={[16, 16]}> {/* Add Row with gutter for spacing */}
+                <Col span={16}>
+                    <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
+                    <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} dateCellRender={dateCellRender} />
+                </Col>
+                <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    { exerciseData.length > 0 ? 
+                        <ExercisePieChart exerciseData={exerciseData} /> : 
+                        <Alert message="No Data To Show, Select any other date from calendar" />
+                    }
+                </Col>
+            </Row>
+
         </Content>
         </Layout>
       </Content>
