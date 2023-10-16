@@ -13,7 +13,6 @@ const ExercisePieChart = ({ exerciseData }) => {
     angleField: "value",
     colorField: "type",
     radius: 1.0,
-    autoFit: false,
     autoFit: true,
     label: {
       type: "outer",

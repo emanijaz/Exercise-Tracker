@@ -1,10 +1,8 @@
 
-import React, {useState,useRef} from 'react';
+import React, {useState} from 'react';
 import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import NavBar from './NavBar';
-import LoggedExercises from './LoggedExercises';
-import CreateExercise from './CreateExercise';
 import { Link } from 'react-router-dom';
 const { Content, Sider } = Layout;
 
@@ -15,43 +13,39 @@ const items2 = [
   { key: 'sub4', icon: <UserOutlined />, label: 'Profile', path: '/profile' },
 ];
 
-const LayoutPage = () => {
+const LayoutPage = ({children, defaultSelectedKey}) => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const loggedExercisesRef = useRef();
-  // Function to be called when a new exercise is added
-  const handleExerciseAdded = () => {
-    // Call the fetchData function of the LoggedExercises component through the ref
-    loggedExercisesRef.current.fetchData();
-  };
- 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <Layout>
+    <Layout style={{ minHeight: '100vh' }}>
       <NavBar/>
       <Content
         style={{
           padding: '0 0px',
+          overflow: 'initial' 
         }}
       >
         <Layout
           style={{
             padding: '0px 0',
             background: colorBgContainer,
+            minHeight: '100%'
           }}
         >
           <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}
             style={{
               background: colorBgContainer,
+              minHeight: '100vh', overflow: 'hidden'
             }}
             width={200}
           >
           <Menu 
             mode="inline"
-            defaultSelectedKeys={['sub1']}
-            defaultOpenKeys={['sub1']}
+            defaultSelectedKeys={[defaultSelectedKey]}
+            defaultOpenKeys={[defaultSelectedKey]}
             style={{
               height: '180%',
             }}
@@ -69,11 +63,10 @@ const LayoutPage = () => {
           <Content
             style={{
               padding: '0 24px',
-              minHeight: 280,
+              minHeight: '100vh',
             }}
           >
-            <CreateExercise onExerciseAdded={handleExerciseAdded}/>
-            <LoggedExercises ref={loggedExercisesRef}/>
+            {children}
           </Content>
         </Layout>
       </Content>

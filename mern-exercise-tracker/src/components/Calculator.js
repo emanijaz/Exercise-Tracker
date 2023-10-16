@@ -1,12 +1,8 @@
 import React , {useState} from 'react'
-import NavBar from './NavBar'
-import { Layout, Menu ,theme} from 'antd';
-import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
 import { Card, Row, Col, Button,  Modal, Form, InputNumber, Select, Alert} from 'antd';
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import LayoutPage from './LayoutPage'
 const { Option } = Select;
-const { Content, Sider } = Layout;
 
 const tailLayout = {
     wrapperCol: {
@@ -15,16 +11,7 @@ const tailLayout = {
     },
 };
 
-const items2 = [
-    { key: 'sub1', icon: <DashboardOutlined />, label: 'Dashboard', path: '/' },
-    { key: 'sub2', icon: <CalculatorOutlined />, label: 'Fitness Calculator', path: '/calculator' },
-    { key: 'sub3', icon: <AreaChartOutlined />, label: 'Charts', path: '/chart' },
-    { key: 'sub4', icon: <UserOutlined />, label: 'Profile', path: '/profile' },
-  ];
-  
-
 export default function Calculator() {
-    const [collapsed, setCollapsed] = useState(false);
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [bmi, setBmi] = useState(false);
@@ -174,54 +161,9 @@ export default function Calculator() {
         handleCancel();
     };
     
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
-  return (
-    <Layout>
-      <NavBar/>
-      <Content
-        style={{
-          padding: '0 0px',
-        }}
-      >
-        <Layout
-          style={{
-            padding: '0px 0',
-            background: colorBgContainer,
-          }}
-        >
-          <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}
-            style={{
-              background: colorBgContainer,
-            }}
-            width={200}
-          >
-          <Menu 
-            mode="inline"
-            defaultSelectedKeys={['sub2']}
-            defaultOpenKeys={['sub2']}
-            style={{
-              height: '400%',
-            }}
-            theme="dark"
-            inlineCollapsed={collapsed}
-            
-          >
-            {items2.map((item) => (
-              <Menu.Item key={item.key} icon={item.icon}>
-                <Link to={item.path}>{item.label}</Link>
-              </Menu.Item>
-            ))}
-          </Menu>
-          </Sider>
-          <Content
-            style={{
-              padding: '0 24px',
-              minHeight: 280,
-            }}
-          >
 
+  return (
+        <LayoutPage defaultSelectedKey="sub2">
             <Row style={{margin: "5% 5%"}} gutter={16}>
                 <Col span={8}>
                 <Card title="Body Mass Index" bordered={true}>
@@ -357,10 +299,6 @@ export default function Calculator() {
                 </Form.Item>
                 </Form>
             </Modal>
-
-          </Content>
-        </Layout>
-      </Content>
-    </Layout>
+        </LayoutPage>
   )
 }
