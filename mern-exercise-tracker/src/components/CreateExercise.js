@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form } from 'antd';
+import { Button, Modal, Form, message } from 'antd';
+import axios from 'axios';
+import dayjs from 'dayjs';
 import {
     DatePicker,
     Input,
@@ -13,7 +15,7 @@ const tailLayout = {
     },
 };
 
-export default function CreateExercise() {
+export default function CreateExercise({ onExerciseAdded }) {
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -23,8 +25,32 @@ export default function CreateExercise() {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    const onFinish = (values) => {
+    const onFinish = async(values) => {
         console.log(values)
+        const formattedDate = dayjs(values.date).format('YYYY-MM-DD');
+        try {
+            axios.post("http://localhost:5000/exercises/create", {
+                username: "tester1",
+                description: values.description,
+                duration: Number(values.duration),
+                date: formattedDate
+            }).then((response)=>{
+                console.log("exercise created successfully")
+                message.success("Exercise Logged Successfully");
+                if (onExerciseAdded) {
+                    console.log("calling on exercise added")
+                    onExerciseAdded();
+                }
+            })
+            
+            setIsModalOpen(false);
+    
+            
+        }
+        catch{
+            console.log("Error creating exercise");
+            message.error("Error Creating Exercise");
+        }
     };
     const onReset = () => {
         form.resetFields();

@@ -3,48 +3,49 @@ import React, {useState} from 'react';
 import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import NavBar from './NavBar';
-import LoggedExercises from './LoggedExercises';
-import CreateExercise from './CreateExercise';
 import { Link } from 'react-router-dom';
 const { Content, Sider } = Layout;
 
 const items2 = [
   { key: 'sub1', icon: <DashboardOutlined />, label: 'Dashboard', path: '/' },
   { key: 'sub2', icon: <CalculatorOutlined />, label: 'Fitness Calculator', path: '/calculator' },
-  { key: 'sub3', icon: <AreaChartOutlined />, label: 'Charts', path: '/charts' },
+  { key: 'sub3', icon: <AreaChartOutlined />, label: 'Charts', path: '/chart' },
   { key: 'sub4', icon: <UserOutlined />, label: 'Profile', path: '/profile' },
 ];
 
-const LayoutPage = () => {
+const LayoutPage = ({children, defaultSelectedKey}) => {
   const [collapsed, setCollapsed] = useState(false);
- 
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <Layout>
+    <Layout style={{ minHeight: '100vh' }}>
       <NavBar/>
       <Content
         style={{
           padding: '0 0px',
+          overflow: 'initial' 
         }}
       >
         <Layout
           style={{
             padding: '0px 0',
             background: colorBgContainer,
+            minHeight: '100%'
           }}
         >
           <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}
             style={{
               background: colorBgContainer,
+              minHeight: '100vh', overflow: 'hidden'
             }}
             width={200}
           >
           <Menu 
             mode="inline"
-            defaultSelectedKeys={['sub1']}
-            defaultOpenKeys={['sub1']}
+            defaultSelectedKeys={[defaultSelectedKey]}
+            defaultOpenKeys={[defaultSelectedKey]}
             style={{
               height: '180%',
             }}
@@ -62,11 +63,10 @@ const LayoutPage = () => {
           <Content
             style={{
               padding: '0 24px',
-              minHeight: 280,
+              minHeight: '100vh',
             }}
           >
-            <CreateExercise/>
-            <LoggedExercises/>
+            {children}
           </Content>
         </Layout>
       </Content>
