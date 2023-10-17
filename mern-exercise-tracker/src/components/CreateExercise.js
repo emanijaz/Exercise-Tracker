@@ -96,7 +96,7 @@ export default function CreateExercise({ onExerciseAdded }) {
                     },
                 ]}
                 >
-                    <InputNumber />
+                    <InputNumber min={1}/>
                 </Form.Item>
                 <Form.Item name="date" label="DatePicker">
                     <DatePicker />
