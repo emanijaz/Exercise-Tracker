@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
+    "@ant-design/pro-components": "^2.6.30",
+    "@ant-design/pro-skeleton": "^2.1.7",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@testing-library/jest-dom": "^5.17.0",
