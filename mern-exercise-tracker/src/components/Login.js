@@ -1,33 +1,22 @@
 import {
-    AlipayOutlined,
     LockOutlined,
-    TaobaoOutlined,
-    UserOutlined,
-    WeiboOutlined,
-    MobileOutlined
+    UserOutlined
   } from '@ant-design/icons';
   import {
     LoginFormPage,
     ProConfigProvider,
-    ProFormCaptcha,
     ProFormCheckbox,
     ProFormText,
   } from '@ant-design/pro-components';
-  import { Divider, Space, Tabs, theme } from 'antd';
+  import { Tabs, theme } from 'antd';
   import { useState } from 'react';
   import logo from './logo.png';
   
-  const iconStyles = {
-    color: 'rgba(0, 0, 0, 0.2)',
-    fontSize: '18px',
-    verticalAlign: 'middle',
-    cursor: 'pointer',
-  };
-  
   const Login = () => {
-    const [loginType, setLoginType] = useState('account');
+    const [loginType, setLoginType] = useState('login');
     const { token } = theme.useToken();
     const handleFinish = (values) => {
+        console.log(loginType)
         console.log('Form submitted with values:', values);
         sessionStorage.setItem('username', values.username);
       };
@@ -55,83 +44,18 @@ import {
               submitText: 'Submit',
             },
           }}
-        //   actions={
-        //     <div
-        //       style={{
-        //         display: 'flex',
-        //         justifyContent: 'center',
-        //         alignItems: 'center',
-        //         flexDirection: 'column',
-        //       }}
-        //     >
-        //       <Divider plain>
-        //         <span
-        //           style={{
-        //             color: token.colorTextPlaceholder,
-        //             fontWeight: 'normal',
-        //             fontSize: 14,
-        //           }}
-        //         >
-        //           Contact
-        //         </span>
-        //       </Divider>
-        //       <Space align="center" size={24}>
-        //         <div
-        //           style={{
-        //             display: 'flex',
-        //             justifyContent: 'center',
-        //             alignItems: 'center',
-        //             flexDirection: 'column',
-        //             height: 40,
-        //             width: 40,
-        //             border: '1px solid ' + token.colorPrimaryBorder,
-        //             borderRadius: '50%',
-        //           }}
-        //         >
-        //           <AlipayOutlined style={{ ...iconStyles, color: '#1677FF' }} />
-        //         </div>
-        //         <div
-        //           style={{
-        //             display: 'flex',
-        //             justifyContent: 'center',
-        //             alignItems: 'center',
-        //             flexDirection: 'column',
-        //             height: 40,
-        //             width: 40,
-        //             border: '1px solid ' + token.colorPrimaryBorder,
-        //             borderRadius: '50%',
-        //           }}
-        //         >
-        //           <TaobaoOutlined style={{ ...iconStyles, color: '#FF6A10' }} />
-        //         </div>
-        //         <div
-        //           style={{
-        //             display: 'flex',
-        //             justifyContent: 'center',
-        //             alignItems: 'center',
-        //             flexDirection: 'column',
-        //             height: 40,
-        //             width: 40,
-        //             border: '1px solid ' + token.colorPrimaryBorder,
-        //             borderRadius: '50%',
-        //           }}
-        //         >
-        //           <WeiboOutlined style={{ ...iconStyles, color: '#1890ff' }} />
-        //         </div>
-        //       </Space>
-        //     </div>
-        //   }
+
         >
           <Tabs
             centered
             activeKey={loginType}
             onChange={(activeKey) => setLoginType(activeKey)}
           >
-            <Tabs.TabPane key={'account'} tab={'Login'} />
-            <Tabs.TabPane key={'phone'} tab={'Create Account'} />
+            <Tabs.TabPane key={'login'} tab={'Login'} />
+            <Tabs.TabPane key={'register'} tab={'Create Account'} />
           </Tabs>
           
-          {loginType === 'account' && (
+          {loginType === 'login' && (
             <>
               <ProFormText
                 name="username"
@@ -178,7 +102,7 @@ import {
        
             </>
           )}
-          {loginType === 'phone' && (
+          {loginType === 'register' && (
           <>
             <ProFormText
                 name="new_username"
