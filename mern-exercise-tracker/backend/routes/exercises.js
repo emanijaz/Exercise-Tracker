@@ -22,11 +22,23 @@ router.route('/:id').get((req,res)=>{
     Exercise.findById(req.params.id).then(exercise=> res.json(exercise)).catch(err=>res.status(400).json("Error: "+err));
 })
 
-// get specific exercise
-// router.route('/:username').get((req,res)=>{
-//     Exercise.find({username: req.params.username}).then(exercise=> res.json(exercise)).catch(err=> res.status(400).json("Error: "+err))
-//     // Exercise.findById(req.params.id).then(exercise=> res.json(exercise)).catch(err=>res.status(400).json("Error: "+err));
-// })
+router.route('/user/:username').get(async (req, res) => {
+    try {
+      const exercises = await Exercise.find({ username: req.params.username });
+  
+      if (!exercises) {
+        return res.status(404).json({ message: 'Exercises not found for the specified username' });
+      }
+  
+      if (exercises.length === 0) {
+        return res.status(404).json({ message: 'No exercises found for the specified username' });
+      }
+  
+      res.json(exercises);
+    } catch (err) {
+      res.status(500).json({ error: 'Internal Server Error', details: err.message });
+    }
+  });
 
 //delete specific exercise
 router.route('/:id').delete((req,res)=>{

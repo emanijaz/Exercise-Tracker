@@ -7,27 +7,25 @@ router.route('/').get((req, res)=>{
     User.find().then(users=> res.json(users)).catch(err=>res.status(400).json("Error: "+err));
 })
 
-router.route('/login').post((req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
+router.route('/login').post(async(req, res) => {
+    try{
+        const username = req.body.username;
+        const password = req.body.password;
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json("User not found.");
+        }
+        const passwordsMatch = await bcrypt.compare(password, user.password);
 
-    User.findOne({ username })
-        .then(user => {
-            if (!user) {
-                return res.status(400).json("User not found.");
-            }
+        if (!passwordsMatch) {
+            return res.status(400).json("Incorrect password.");
+        }
+        res.json("Login successful!");
+    }
+    catch(err){
+        res.status(400).json("Error: " + err.message);
+    }
 
-            // Compare the provided password with the hashed password stored in the database
-            return bcrypt.compare(password, user.password);
-        })
-        .then(passwordsMatch => {
-            if (!passwordsMatch) {
-                return res.status(400).json("Incorrect password.");
-            }
-
-            res.json("Login successful!");
-        })
-        .catch(err => res.status(400).json("Error: " + err.message));
 });
 
 // add user

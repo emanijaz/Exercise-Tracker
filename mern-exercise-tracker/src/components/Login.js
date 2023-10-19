@@ -28,7 +28,7 @@ import {
                     sessionStorage.setItem('username', values.username);
                     setRedirectToDashboard(true);
                 }
-                if(response.status === 400){
+                else{
                     message.error('Retry Login, enter correct username and password');
                 }
             } else {
@@ -41,7 +41,7 @@ import {
                     sessionStorage.setItem('username', values.username);
                     setRedirectToDashboard(true);
                 }
-                if(response.status === 400){
+                else{
                     message.error('Error creating user');
                 }
             }
