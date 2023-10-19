@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const bcrypt = require('bcrypt');
 let User = require('../models/User.model');
 
 // get all users
