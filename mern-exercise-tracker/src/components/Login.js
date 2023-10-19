@@ -5,22 +5,18 @@ import {
   import {
     LoginFormPage,
     ProConfigProvider,
-    ProFormCheckbox,
     ProFormText,
   } from '@ant-design/pro-components';
   import { Tabs, theme, message } from 'antd';
   import { useState } from 'react';
-  import logo from './logo.png';
   import axios from 'axios'
-//   import { useHistory } from 'react-router-dom';
-
+  import { Navigate } from 'react-router-dom';
 
   const Login = () => {
-    // const history = useHistory();
+    const [redirectToDashboard, setRedirectToDashboard] = useState(false);
     const [loginType, setLoginType] = useState('login');
     const { token } = theme.useToken();
     const handleFinish = async(values) => {
-        console.log(values)
         try {
             if (loginType === "login") {
                 const response = await axios.post('http://localhost:5000/users/login', {
@@ -30,7 +26,8 @@ import {
                 console.log(response);
                 if(response.status === 200){
                     message.success('User LoggedIn successfully');
-                    // history.push('/');
+                    sessionStorage.setItem('username', values.username);
+                    setRedirectToDashboard(true);
                 }
                 if(response.status === 400){
                     message.error('Retry Login, enter correct username and password');
@@ -42,7 +39,8 @@ import {
                 });
                 if(response.status === 200){
                     message.success('User created successfully');
-                    // history.push('/');
+                    sessionStorage.setItem('username', values.username);
+                    setRedirectToDashboard(true);
                 }
                 if(response.status === 400){
                     message.error('Error creating user');
@@ -50,16 +48,15 @@ import {
                 console.log(response);
             }
     
-            console.log('Form submitted with values:', values);
-            sessionStorage.setItem('username', values.username);
         } catch (error) {
-            console.error('Error:', error.message);
-            // Handle the error appropriately
             if (error.response) {
-                console.log('Server responded with:', error.response.data);
+                message.error(error.response.data);
             }
         }
       };
+    if (redirectToDashboard) {
+        return <Navigate to="/" />;
+    }
     return (
       <div
         style={{
@@ -68,9 +65,6 @@ import {
         }}
       >
         <LoginFormPage
-        //   backgroundImageUrl="https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*y0ZTS6WLwvgAAAAAAAAAAAAADml6AQ/fmt.webp"
-        //   logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-          logo={logo}
           backgroundVideoUrl="https://gw.alipayobjects.com/v/huamei_gcee1x/afts/video/jXRBRK_VAwoAAAAAAAAAAAAAK4eUAQBr"
           title="FitMe"
           containerStyle={{
@@ -195,16 +189,6 @@ import {
               marginBlockEnd: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              Remember
-            </ProFormCheckbox>
-            <a
-              style={{
-                float: 'right',
-              }}
-            >
-              Forgot Password
-            </a>
           </div>
         </LoginFormPage>
       </div>
