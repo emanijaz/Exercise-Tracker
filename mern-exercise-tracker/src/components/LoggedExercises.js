@@ -15,7 +15,8 @@ const LoggedExercises = forwardRef((props, ref) => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:5000/exercises/');
+      const loggedUser = sessionStorage.getItem('username');
+      const response = await axios.get(`http://localhost:5000/exercises/user/${loggedUser}`);
       const d = response.data.map((exercise, index)=> ({
         key: exercise._id,
         description: exercise.description,
@@ -86,12 +87,14 @@ const LoggedExercises = forwardRef((props, ref) => {
 
   const handleEditModalOk = () => {
     const form = editFormRef.current;
+    const loggedUser = sessionStorage.getItem('username')
+    console.log(loggedUser);
     form
       .validateFields()
       .then(async (values) => {
         try {
           await axios.post(`http://localhost:5000/exercises/update/${editingExercise.key}`, {
-            username: "tester1",
+            username: loggedUser,
             description: values.description,
             duration: Number(values.duration),
             date: values.date,

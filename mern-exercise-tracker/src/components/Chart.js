@@ -39,7 +39,8 @@ const Chart = () => {
     // Fetch your exercise data from the server
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/exercises/');
+        const loggedUser = sessionStorage.getItem('username');
+        const response = await axios.get(`http://localhost:5000/exercises/user/${loggedUser}`);
         const filteredExercises = response.data.filter((exercise)=> {
             return dayjs(exercise.date).format('YYYY-MM-DD') === selectedValue.format('YYYY-MM-DD');
         })

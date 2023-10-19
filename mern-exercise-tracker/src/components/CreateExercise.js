@@ -26,11 +26,11 @@ export default function CreateExercise({ onExerciseAdded }) {
         setIsModalOpen(false);
     };
     const onFinish = async(values) => {
-        console.log(values)
+        const loggedUser = sessionStorage.getItem('username');
         const formattedDate = dayjs(values.date).format('YYYY-MM-DD');
         try {
             axios.post("http://localhost:5000/exercises/create", {
-                username: "tester1",
+                username: loggedUser,
                 description: values.description,
                 duration: Number(values.duration),
                 date: formattedDate
