@@ -23,7 +23,6 @@ import {
                     username: values.username,
                     password: values.password
                 });
-                console.log(response);
                 if(response.status === 200){
                     message.success('User LoggedIn successfully');
                     sessionStorage.setItem('username', values.username);
@@ -45,7 +44,6 @@ import {
                 if(response.status === 400){
                     message.error('Error creating user');
                 }
-                console.log(response);
             }
     
         } catch (error) {
