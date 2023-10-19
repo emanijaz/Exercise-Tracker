@@ -8,17 +8,57 @@ import {
     ProFormCheckbox,
     ProFormText,
   } from '@ant-design/pro-components';
-  import { Tabs, theme } from 'antd';
+  import { Tabs, theme, message } from 'antd';
   import { useState } from 'react';
   import logo from './logo.png';
-  
+  import axios from 'axios'
+//   import { useHistory } from 'react-router-dom';
+
+
   const Login = () => {
+    // const history = useHistory();
     const [loginType, setLoginType] = useState('login');
     const { token } = theme.useToken();
-    const handleFinish = (values) => {
-        console.log(loginType)
-        console.log('Form submitted with values:', values);
-        sessionStorage.setItem('username', values.username);
+    const handleFinish = async(values) => {
+        console.log(values)
+        try {
+            if (loginType === "login") {
+                const response = await axios.post('http://localhost:5000/users/login', {
+                    username: values.username,
+                    password: values.password
+                });
+                console.log(response);
+                if(response.status === 200){
+                    message.success('User LoggedIn successfully');
+                    // history.push('/');
+                }
+                if(response.status === 400){
+                    message.error('Retry Login, enter correct username and password');
+                }
+            } else {
+                const response = await axios.post('http://localhost:5000/users/create', {
+                    username: values.new_username,
+                    password: values.new_password
+                });
+                if(response.status === 200){
+                    message.success('User created successfully');
+                    // history.push('/');
+                }
+                if(response.status === 400){
+                    message.error('Error creating user');
+                }
+                console.log(response);
+            }
+    
+            console.log('Form submitted with values:', values);
+            sessionStorage.setItem('username', values.username);
+        } catch (error) {
+            console.error('Error:', error.message);
+            // Handle the error appropriately
+            if (error.response) {
+                console.log('Server responded with:', error.response.data);
+            }
+        }
       };
     return (
       <div
