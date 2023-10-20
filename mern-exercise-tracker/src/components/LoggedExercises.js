@@ -16,6 +16,8 @@ const LoggedExercises = forwardRef((props, ref) => {
     setLoading(true);
     try {
       const loggedUser = sessionStorage.getItem('username');
+      console.log("log exercise: ",loggedUser)
+
       const response = await axios.get(`http://localhost:5000/exercises/user/${loggedUser}`);
       const d = response.data.map((exercise, index)=> ({
         key: exercise._id,
