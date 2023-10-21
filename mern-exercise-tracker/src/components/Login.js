@@ -10,12 +10,13 @@ import {
   import { Tabs, theme, message } from 'antd';
   import { useState } from 'react';
   import axios from 'axios'
-  import { Navigate } from 'react-router-dom';
+  import { useNavigate } from "react-router-dom";
 
   const Login = () => {
-    const [redirectToDashboard, setRedirectToDashboard] = useState(false);
     const [loginType, setLoginType] = useState('login');
     const { token } = theme.useToken();
+    const navigate = useNavigate();
+ 
     const handleFinish = async(values) => {
         try {
             if (loginType === "login") {
@@ -26,7 +27,7 @@ import {
                 if(response.status === 200){
                     message.success('User LoggedIn successfully');
                     sessionStorage.setItem('username', values.username);
-                    setRedirectToDashboard(true);
+                    navigate("/")
                 }
                 else{
                     message.error('Retry Login, enter correct username and password');
@@ -38,8 +39,9 @@ import {
                 });
                 if(response.status === 200){
                     message.success('User created successfully');
-                    sessionStorage.setItem('username', values.username);
-                    setRedirectToDashboard(true);
+                    sessionStorage.setItem('username', values.new_username);
+                    navigate("/")
+
                 }
                 else{
                     message.error('Error creating user');
@@ -52,9 +54,6 @@ import {
             }
         }
       };
-    if (redirectToDashboard) {
-        return <Navigate to="/" />;
-    }
     return (
       <div
         style={{

@@ -1,12 +1,19 @@
-import React from 'react'
-import { Navigate } from 'react-router-dom';
-const isLoggedIn = sessionStorage.getItem('username') ? true : false;
+import {useEffect} from 'react'
+import { useNavigate } from "react-router-dom";
 
-console.log("is logged in",isLoggedIn)
+const username = sessionStorage.getItem('username');
+const isLoggedIn = !!username;
+
 const PrivateRoute = ({children})=> {
-    if(!isLoggedIn) {
-       return <Navigate to="/login" replace />
-    }
+  const navigate = useNavigate();
+
+    useEffect(()=> {
+        if(!isLoggedIn) {
+            navigate("/login")
+        }
+
+    },[navigate])
+    
     return children;
 };
 

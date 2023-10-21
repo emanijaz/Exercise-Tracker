@@ -1,6 +1,6 @@
 
 import React, {useState} from 'react';
-import { UserOutlined, DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
+import { DashboardOutlined, CalculatorOutlined, AreaChartOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import NavBar from './NavBar';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,6 @@ const items2 = [
   { key: 'sub1', icon: <DashboardOutlined />, label: 'Dashboard', path: '/' },
   { key: 'sub2', icon: <CalculatorOutlined />, label: 'Fitness Calculator', path: '/calculator' },
   { key: 'sub3', icon: <AreaChartOutlined />, label: 'Charts', path: '/chart' },
-  { key: 'sub4', icon: <UserOutlined />, label: 'Profile', path: '/profile' },
 ];
 
 const LayoutPage = ({children, defaultSelectedKey}) => {

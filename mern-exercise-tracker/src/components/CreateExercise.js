@@ -35,10 +35,8 @@ export default function CreateExercise({ onExerciseAdded }) {
                 duration: Number(values.duration),
                 date: formattedDate
             }).then((response)=>{
-                console.log("exercise created successfully")
                 message.success("Exercise Logged Successfully");
                 if (onExerciseAdded) {
-                    console.log("calling on exercise added")
                     onExerciseAdded();
                 }
             })
@@ -48,7 +46,6 @@ export default function CreateExercise({ onExerciseAdded }) {
             
         }
         catch{
-            console.log("Error creating exercise");
             message.error("Error Creating Exercise");
         }
     };

@@ -1,20 +1,17 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Layout, Button, message } from 'antd';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
 const { Header } = Layout;
 export default function NavBar() {
-  const [isLoggedOut, setIsLoggedOut]= useState(false);
+  const navigate = useNavigate();
   const loggedUser = sessionStorage.getItem('username')
   const handleLogOut = () => {
     sessionStorage.removeItem('username');
-    setIsLoggedOut(true);
     message.success("User logged out successfully!")
+    navigate("/login")
   }
-  if(isLoggedOut){
-    return(
-      <Navigate to="/login"></Navigate>
-    )
-  }
+ 
   return (
     <div>
        <Header

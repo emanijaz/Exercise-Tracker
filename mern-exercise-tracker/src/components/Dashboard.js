@@ -4,9 +4,7 @@ import LoggedExercises from './LoggedExercises';
 import CreateExercise from './CreateExercise';
 export default function Dashboard() {
   const loggedExercisesRef = useRef();
-  // Function to be called when a new exercise is added
   const handleExerciseAdded = () => {
-    // Call the fetchData function of the LoggedExercises component through the ref
     loggedExercisesRef.current.fetchData();
   };
  

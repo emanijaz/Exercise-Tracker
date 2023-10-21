@@ -5,10 +5,12 @@ import Calculator from './components/Calculator';
 import Chart from './components/Chart';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
+import {ConfigProvider} from 'antd';
 
 
 function App() {
   return (
+    <ConfigProvider>
       <BrowserRouter>
       <Routes>
           <Route
@@ -27,6 +29,7 @@ function App() {
 
       </Routes>
       </BrowserRouter>
+      </ConfigProvider>
   );
 }
 
