@@ -40,21 +40,29 @@ const Chart = () => {
     const fetchData = async () => {
       try {
         const loggedUser = sessionStorage.getItem('username');
-        const response = await axios.get(`http://localhost:5000/exercises/user/${loggedUser}`);
-        const filteredExercises = response.data.filter((exercise)=> {
-            return dayjs(exercise.date).format('YYYY-MM-DD') === selectedValue.format('YYYY-MM-DD');
-        })
-        setExerciseData(filteredExercises);
-
-        const descriptions = {};
-        response.data.forEach((exercise) => {
-          const formattedDate = dayjs(exercise.date).format('YYYY-MM-DD');
-          if (!descriptions[formattedDate]) {
-            descriptions[formattedDate] = [];
-          }
-          descriptions[formattedDate].push(exercise.description);
+        const response = await axios.get(`/exercises/user/${loggedUser}`,{
+          validateStatus: (status) => status >= 200 && status < 500, // Treat 404 as success
         });
-        setExerciseDescriptions(descriptions);
+        if(response.status === 404){
+          setExerciseData([]);
+          setExerciseDescriptions([]);
+        }
+        else{
+          const filteredExercises = response.data.filter((exercise)=> {
+              return dayjs(exercise.date).format('YYYY-MM-DD') === selectedValue.format('YYYY-MM-DD');
+          })
+          setExerciseData(filteredExercises);
+
+          const descriptions = {};
+          response.data.forEach((exercise) => {
+            const formattedDate = dayjs(exercise.date).format('YYYY-MM-DD');
+            if (!descriptions[formattedDate]) {
+              descriptions[formattedDate] = [];
+            }
+            descriptions[formattedDate].push(exercise.description);
+          });
+          setExerciseDescriptions(descriptions);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }

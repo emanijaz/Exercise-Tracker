@@ -25,11 +25,6 @@ router.route('/:id').get((req,res)=>{
 router.route('/user/:username').get(async (req, res) => {
     try {
       const exercises = await Exercise.find({ username: req.params.username });
-  
-      if (!exercises) {
-        return res.status(404).json({ message: 'Exercises not found for the specified username' });
-      }
-  
       if (exercises.length === 0) {
         return res.status(404).json({ message: 'No exercises found for the specified username' });
       }
