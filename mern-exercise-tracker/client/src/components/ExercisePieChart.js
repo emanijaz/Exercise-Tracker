@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pie } from "@ant-design/charts";
+import { Pie } from "@ant-design/plots";
 
 const ExercisePieChart = ({ exerciseData }) => {
   const data = exerciseData.map((exercise) => ({

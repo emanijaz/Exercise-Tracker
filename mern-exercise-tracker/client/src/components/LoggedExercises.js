@@ -16,15 +16,24 @@ const LoggedExercises = forwardRef((props, ref) => {
     setLoading(true);
     try {
       const loggedUser = sessionStorage.getItem('username');
-
-      const response = await axios.get(`http://localhost:5000/exercises/user/${loggedUser}`);
-      const d = response.data.map((exercise, index)=> ({
-        key: exercise._id,
-        description: exercise.description,
-        duration: exercise.duration,
-        date: dayjs(exercise.date).format('YYYY-MM-DD')
-      }))
-      setData(d);
+      const response = await axios.get(`/exercises/user/${loggedUser}`,{
+        validateStatus: (status) => status >= 200 && status < 500, // Treat 404 as success
+      });
+      if(response.status === 404){
+        setData([]);
+      }
+      else if(response.status ===200){
+        const d = response.data.map((exercise, index)=> ({
+          key: exercise._id,
+          description: exercise.description,
+          duration: exercise.duration,
+          date: dayjs(exercise.date).format('YYYY-MM-DD')
+        }))
+        setData(d);
+      }
+      else{
+        console.error('Unexpected response status:', response.status);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -94,7 +103,7 @@ const LoggedExercises = forwardRef((props, ref) => {
       .validateFields()
       .then(async (values) => {
         try {
-          await axios.post(`http://localhost:5000/exercises/update/${editingExercise.key}`, {
+          await axios.post(`/exercises/update/${editingExercise.key}`, {
             username: loggedUser,
             description: values.description,
             duration: Number(values.duration),
@@ -116,7 +125,7 @@ const LoggedExercises = forwardRef((props, ref) => {
 
   const handleDelete = async(record) => {
     try {
-      await axios.delete(`http://localhost:5000/exercises/${record.key}`);
+      await axios.delete(`/exercises/${record.key}`);
       message.success('Exercise deleted successfully');
       fetchData();
     } catch (error) {

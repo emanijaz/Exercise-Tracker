@@ -10,8 +10,8 @@ import {
 
 const tailLayout = {
     wrapperCol: {
-      offset: 6,
-      span: 16,
+        offset: 6,
+        span: 16,
     },
 };
 
@@ -29,7 +29,7 @@ export default function CreateExercise({ onExerciseAdded }) {
         const loggedUser = sessionStorage.getItem('username');
         const formattedDate = dayjs(values.date).format('YYYY-MM-DD');
         try {
-            axios.post("http://localhost:5000/exercises/create", {
+            axios.post("/exercises/create", {
                 username: loggedUser,
                 description: values.description,
                 duration: Number(values.duration),
@@ -40,10 +40,7 @@ export default function CreateExercise({ onExerciseAdded }) {
                     onExerciseAdded();
                 }
             })
-            
             setIsModalOpen(false);
-    
-            
         }
         catch{
             message.error("Error Creating Exercise");
@@ -80,7 +77,7 @@ export default function CreateExercise({ onExerciseAdded }) {
                 <Form.Item name="description" label="Description"
                 rules={[
                     {
-                      required: true,
+                        required: true,
                     },
                 ]}
                 >

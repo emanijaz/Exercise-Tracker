@@ -29,21 +29,27 @@ router.route('/login').post(async(req, res) => {
 });
 
 // add user
-router.route('/create').post((req,res)=>{
-    const username = req.body.username;
-    const password = req.body.password;
-    
-    User.findOne({username}).then((existingUser)=>{
-        if(existingUser){
-            return res.status(400).json("Username already exists.");
+router.route('/create').post(async (req,res)=>{
+    try{
+        const username = req.body.username;
+        const password = req.body.password;
+        const user = await User.findOne({username});
+        if(user){
+            return res.status(400).json("Username already exist");
         }
-        return bcrypt.hash(password, 10);
-    }).then(hashedPassword=>{
-        const newUser = new User({ username, password: hashedPassword });
-        return newUser.save()
-    }).then(()=>{
-        res.json("User created successfully!")
-    }).catch(err => res.status(400).json("Error: " + err.message));
+        const pass = await bcrypt.hash(password, 10);
+        const newUser = new User({ username, password: pass });
+        const savedUser = await newUser.save();
+        if(savedUser){
+            return res.json("User created successfully!")
+        }
+        else{
+            return res.status(400).json("Error creating user");
+        }
+    }
+    catch(err){
+        res.status(400).json("Error: " + err.message);
+    }
 })
 
 module.exports = router;
