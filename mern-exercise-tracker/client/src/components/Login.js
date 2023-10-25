@@ -48,24 +48,23 @@ export default function Login() {
   const navigate = useNavigate();
   const handleLogin = async(values) => {
     try{
-
-    
       const response = await axios.post('/users/login', {
         username: values.username,
         password: values.password
       });
-      if(response.status === 200){
+      if (response.status === 200) {
+        if (response.data.message === 'Login Successful') {
           message.success('User LoggedIn successfully');
           sessionStorage.setItem('username', values.username);
-          navigate("/")
-      }
-      else{
+          navigate('/');
+        } else {
           message.error('Retry Login, enter correct username and password');
+        }
       }
     }
     catch (error) {
       if (error.response) {
-          message.error(error.response.data);
+          message.error(error.response.data.message);
       }
     }
   };
@@ -88,7 +87,7 @@ export default function Login() {
     }
     catch (error) {
       if (error.response) {
-          message.error(error.response.data);
+          message.error(error.response.data.message);
       }
     }
   };

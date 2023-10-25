@@ -3,7 +3,7 @@ let Exercise = require('../models/Exercise.model');
 
 // get all exercises
 router.route('/').get((req, res)=>{
-    Exercise.find().then(exercises=>res.json(exercises)).catch(err=> res.status(400).json("Error: "+err));
+    Exercise.find().then(exercises=>res.json(exercises)).catch(err=> res.status(400).json({message: "Error: "+err}));
 })
 
 // add exercise
@@ -14,12 +14,12 @@ router.route('/create').post((req,res)=>{
     const date = Date.parse(req.body.date);
 
     const NewExercise = new Exercise({username,description,duration,date});
-    NewExercise.save().then(()=> res.json("Exercise created successfully!")).catch(err=> res.status(400).json("Error : "+ err));
+    NewExercise.save().then(()=> res.json({message: "Exercise created successfully!"})).catch(err=> res.status(400).json({message: "Error : "+ err}));
 })
 
 // get specific exercise
 router.route('/:id').get((req,res)=>{
-    Exercise.findById(req.params.id).then(exercise=> res.json(exercise)).catch(err=>res.status(400).json("Error: "+err));
+    Exercise.findById(req.params.id).then(exercise=> res.json(exercise)).catch(err=>res.status(400).json({message: "Error: "+err}));
 })
 
 router.route('/user/:username').get(async (req, res) => {
@@ -37,7 +37,7 @@ router.route('/user/:username').get(async (req, res) => {
 
 //delete specific exercise
 router.route('/:id').delete((req,res)=>{
-    Exercise.findByIdAndDelete(req.params.id).then(()=> res.json("Exercise deleted successfully!")).catch(err=>res.status(400).json("Error: "+err));
+    Exercise.findByIdAndDelete(req.params.id).then(()=> res.json({message:"Exercise deleted successfully!"})).catch(err=>res.status(400).json({message: "Error: "+err}));
 })
 
 //update specific exercise
@@ -49,7 +49,7 @@ router.route("/update/:id").post((req,res)=>{
         exercise.duration = Number(req.body.duration),
         exercise.date = Date.parse(req.body.date)
 
-        exercise.save().then(()=> {res.json("Exercise updated successfully!")}).catch(err=>res.status(400).json("Error: "+err))
+        exercise.save().then(()=> {res.json({message: "Exercise updated successfully!"})}).catch(err=>res.status(400).json({message: "Error: "+err}))
     }).catch(err=>res.status(400).json("Error: "+err))
 })
 

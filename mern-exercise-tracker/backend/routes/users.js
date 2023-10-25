@@ -13,17 +13,17 @@ router.route('/login').post(async(req, res) => {
         const password = req.body.password;
         const user = await User.findOne({ username });
         if (!user) {
-            return res.status(400).json("User not found.");
+            return res.status(400).json({ message: "User not found." });
         }
         const passwordsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordsMatch) {
-            return res.status(400).json("Incorrect password.");
+            return res.status(400).json({ message: "Incorrect Password" });
         }
-        res.json("Login successful!");
+        res.json({ message: "Login Successful" });
     }
     catch(err){
-        res.status(400).json("Error: " + err.message);
+        res.status(400).json({message: "Error: " + err.message});
     }
 
 });
@@ -35,20 +35,20 @@ router.route('/create').post(async (req,res)=>{
         const password = req.body.password;
         const user = await User.findOne({username});
         if(user){
-            return res.status(400).json("Username already exist");
+            return res.status(400).json({ message:"Username already exist"});
         }
         const pass = await bcrypt.hash(password, 10);
         const newUser = new User({ username, password: pass });
         const savedUser = await newUser.save();
         if(savedUser){
-            return res.json("User created successfully!")
+            return res.json({ message: "User created successfully!"})
         }
         else{
-            return res.status(400).json("Error creating user");
+            return res.status(400).json({message:"Error creating user"});
         }
     }
     catch(err){
-        res.status(400).json("Error: " + err.message);
+        res.status(400).json({message: "Error: " + err.message});
     }
 })
 
